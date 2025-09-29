@@ -38,4 +38,4 @@ Cuando intento ejecutar mi programa me sale el siguiente error:
    ```bash
    Error: JavaFX runtime components are missing, and are required to run this application
    ```
-He estado buscando como solucionarlo pero no consegido dar con una solución.
+He estado buscando como solucionarlo pero no conseguido dar con una solución.
