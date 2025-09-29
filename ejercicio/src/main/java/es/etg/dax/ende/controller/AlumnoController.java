@@ -1,15 +1,12 @@
 package es.etg.dax.ende.controller;
-import java.util.List;
-
 import java.io.IOException;
-
+import java.util.List;
 
 import es.etg.dax.ende.App;
 import es.etg.dax.ende.model.Alumno;
 import es.etg.dax.ende.model.db.AlumnoDAO;
 import es.etg.dax.ende.model.db.AlumnoDAOImpl;
 import es.etg.dax.ende.view.AlumnoViewController;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +15,7 @@ import javafx.stage.Stage;
 
 public class AlumnoController extends Application {
 
-    private static final String VIEW_MAIN = "view/alumnoView.fxml";
+    private static final String VIEW_MAIN = "resources/alumnoView.fxml";
     private AlumnoDAO model;
 
     public AlumnoController() {}
