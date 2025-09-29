@@ -1,33 +1,56 @@
 package es.etg.dax.ende.controller;
 import java.util.List;
 
+import java.io.IOException;
+
+
+import es.etg.dax.ende.App;
 import es.etg.dax.ende.model.Alumno;
-import es.etg.dax.ende.model.db.AlumnosDAO;
+import es.etg.dax.ende.model.db.AlumnoDAO;
+import es.etg.dax.ende.model.db.AlumnoDAOImpl;
+import es.etg.dax.ende.view.AlumnoViewController;
 
-public class AlumnoController {
-    private final AlumnosDAO dao;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-    public AlumnoController(AlumnosDAO dao) {
-        this.dao = dao;
+public class AlumnoController extends Application {
+
+    private static final String VIEW_MAIN = "view/alumnoView.fxml";
+    private AlumnoDAO model;
+
+    public AlumnoController() {}
+
+    public AlumnoController(AlumnoDAO mockDAO) {
+        this.model = mockDAO;
     }
 
-    public void insertarAlumno(String nombre, String apellidos, int edad) throws Exception {
-        if (nombre == null || nombre.isBlank()) {
-            throw new IllegalArgumentException("El nombre es obligatorio");
-        }
-        
-        if (apellidos == null || apellidos.isBlank()) {
-            throw new IllegalArgumentException("Los apellidos son obligatorios");
+    @Override
+    public void start(Stage stage) throws IOException {
+        if (model == null) {
+            model = new AlumnoDAOImpl();
         }
 
-        if (edad < 0) {
-            throw new IllegalArgumentException("La edad debe ser positiva");
-        }
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(VIEW_MAIN));
+        Parent root = fxmlLoader.load();
+
+        AlumnoViewController viewController = fxmlLoader.getController();
+        viewController.setAlumnoController(this);
+
+        stage.setTitle("Gestión de Alumnos");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public Alumno crearAlumno(String nombre, String apellidos, int edad) {
         Alumno alumno = new Alumno(nombre, apellidos, edad);
-        dao.insert(alumno);
+        model.insertar(alumno);
+        return alumno;
     }
 
-    public List<Alumno> listarAlumnos() throws Exception {
-        return dao.listAll();
+    public List<Alumno> listarAlumnos() {
+        return model.listar();
     }
 }
